@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/conf/vueapp" mode="merge"/>
+    <filter root="/content/vueapp" mode="merge"/>
+    <filter root="/content/dam/vueapp/asset.jpg" mode="merge"/>
+    <filter root="/content/experience-fragments/vueapp" mode="merge"/>
+</workspaceFilter>
