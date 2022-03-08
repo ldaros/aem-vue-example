@@ -1,44 +1,53 @@
+/*-------------------- Arquivo de configuração webpack --------------------*/
+
+// Loader para arquivos .vue
 const { VueLoaderPlugin } = require("vue-loader");
+
+// Extrator CSS
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const CLIENTLIB_ROOT = "./src/main/content/jcr_root/apps/vueapp/clientlibs";
-const CLIENTLIB_NAME = "clientlib-site";
+// Diretorio Bibliotecas de clientes AEM
+const LIB_ROOT = "./src/main/content/jcr_root/apps/vueapp/clientlibs";
 
-function createConfig(clientlibRoot, clientlib) {
-  return {
-    entry: { bundle: `./${clientlibRoot}/${clientlib}/webpack-entry.js` },
+// Diretorio de destino
+const LIB_NAME = "clientlib-site";
 
-    output: {
-      path: `${__dirname}/${clientlibRoot}/${clientlib}/dist`,
+module.exports = {
+  // Arquivo de entrada
+  entry: { bundle: `./${LIB_ROOT}/${LIB_NAME}/webpack-entry.js` },
 
-      filename: "./[name].js",
-    },
+  // Arquivo de saida
+  output: {
+    path: `${__dirname}/${LIB_ROOT}/${LIB_NAME}/dist`,
 
-    module: {
-rules: [
-  {
-    test: /\.vue$/,
-    loader: "vue-loader",
+    filename: "./[name].js",
   },
-  {
-    test: /\.scss$/,
-    use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-  },
-],
-    },
-    resolve: {
-      alias: {
-        vue$: "vue/dist/vue.esm.js",
+
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: "vue-loader",
       },
-      extensions: [".js", ".vue", ".json"],
-    },
-    plugins: [
-      new VueLoaderPlugin(),
-      new MiniCssExtractPlugin({
-        filename: "./[name].css",
-      }),
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
     ],
-  };
-}
+  },
 
-module.exports = createConfig(CLIENTLIB_ROOT, CLIENTLIB_NAME);
+  // Permite a importação de arquivos .vue
+  resolve: {
+    alias: {
+      vue$: "vue/dist/vue.esm.js",
+    },
+    extensions: [".js", ".vue", ".json"],
+  },
+
+  plugins: [
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "./[name].css",
+    }),
+  ],
+};
